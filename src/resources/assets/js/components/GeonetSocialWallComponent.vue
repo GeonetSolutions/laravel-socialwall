@@ -5,34 +5,17 @@
             	<h1>Geonet Social Wall</h1>
             	<div class="row row-eq-height">
             		<div class="social-loading text-center" v-if="loading">
-						<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-						<span class="sr-only">Loading...</span>
+				<i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+				<span class="sr-only">Loading...</span>
+			</div>
+			<template v-for="post in feed">
+		        	<div v-if="wall_style === 'feed'" class="row social_post social_post_feed" :class="'social_' + post.social_type" >
+					<div class="col-md-4 social-img text-center" >
+						<img v-if="post.media" :src="post.media" />
 					</div>
-	                <div v-if="wall_style === 'feed'" v-for="post in feed" class="row social_post social_post_feed" :class="'social_' + post.social_type" >
-						<div class="col-md-4 social-img text-center" >
-							<img v-if="post.media" :src="post.media" />
-						</div>
-						<div class="col-md-8">
-							<p class="social_message" v-if="post.message">{{ post.message }}</p>
-							<a :href="post.link" class="btn btn-secondary" target="_BLANK">
-								Read More on 
-								<i class="fa fa-instagram" v-if="post.social_type == 'instagram'" aria-hidden="true"></i>
-								<i class="fa fa-twitter" v-if="post.social_type == 'twitter'" aria-hidden="true"></i>
-								<i class="fa fa-facebook" v-if="post.social_type == 'facebook'" aria-hidden="true"></i>
-							</a>
-							<div class="profile_info">
-								<p><img class="profile_pic" :src="post.profile_pic" /> Posted By: {{ post.name }}</p>
-								<p class="date">Date Posted: {{ post.frontend_timestamp }}</p>
-							</div>
-						</div>
-					</div>
-
-					<div v-else v-for="post in feed" class="col-md-4 social_post" >
-						<p v-if="post.media" style="text-align:center">
-							<img style="max-height:200px; max-width:300px;" :src="post.media" />
-						</p>
-						<p v-if="post.message">{{ post.message }}</p>
-						<a :href="post.link" target="_BLANK" class="btn btn-secondary btn-social_block"> 
+					<div class="col-md-8">
+						<p class="social_message" v-if="post.message">{{ post.message }}</p>
+						<a :href="post.link" class="btn btn-secondary" target="_BLANK">
 							Read More on 
 							<i class="fa fa-instagram" v-if="post.social_type == 'instagram'" aria-hidden="true"></i>
 							<i class="fa fa-twitter" v-if="post.social_type == 'twitter'" aria-hidden="true"></i>
@@ -44,6 +27,24 @@
 						</div>
 					</div>
 				</div>
+				<div v-else class="col-md-4 social_post" >
+					<p v-if="post.media" style="text-align:center">
+						<img style="max-height:200px; max-width:300px;" :src="post.media" />
+					</p>
+					<p v-if="post.message">{{ post.message }}</p>
+					<a :href="post.link" target="_BLANK" class="btn btn-secondary btn-social_block"> 
+						Read More on 
+						<i class="fa fa-instagram" v-if="post.social_type == 'instagram'" aria-hidden="true"></i>
+						<i class="fa fa-twitter" v-if="post.social_type == 'twitter'" aria-hidden="true"></i>
+						<i class="fa fa-facebook" v-if="post.social_type == 'facebook'" aria-hidden="true"></i>
+					</a>
+					<div class="profile_info">
+						<p><img class="profile_pic" :src="post.profile_pic" /> Posted By: {{ post.name }}</p>
+						<p class="date">Date Posted: {{ post.frontend_timestamp }}</p>
+					</div>
+				</div>
+			</template>
+		</div>
             </div>
         </div>
     </div>
