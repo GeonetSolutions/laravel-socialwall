@@ -347,12 +347,13 @@ class SocialWallService
             if (!empty($instaFeed)) {
                 foreach ($instaFeed as $index => $photo) {
                     $frontend_time = DateTime::createFromFormat('U', $photo->created_time)->format('d F, Y \a\t H:i:s');
+                    $photo_caption = (!empty($photo->caption->text)) ? $photo->caption->text : ''; 
 
                     if (!empty($hastag)) {
                         if (in_array($hastag, $photo->tags)) {
                             $photos[$index]['social_type']          = 'instagram';
                             $photos[$index]['id']                   = $photo->id;
-                            $photos[$index]['message']              = $photo->caption->text;
+                            $photos[$index]['message']              = $photo_caption;
                             $photos[$index]['link']                 = $photo->link;
                             $photos[$index]['backend_timestamp']    = $photo->created_time;
                             $photos[$index]['frontend_timestamp']   = $frontend_time;
@@ -370,7 +371,7 @@ class SocialWallService
                     } else {
                         $photos[$index]['social_type']          = 'instagram';
                         $photos[$index]['id']                   = $photo->id;
-                        $photos[$index]['message']              = $photo->caption->text;
+                        $photos[$index]['message']              = $photo_caption;
                         $photos[$index]['link']                 = $photo->link;
                         $photos[$index]['backend_timestamp']    = $photo->created_time;
                         $photos[$index]['frontend_timestamp']   = $frontend_time;
@@ -387,11 +388,12 @@ class SocialWallService
                 if (!empty($hastag) && $hash_count < $instaNumOfPhotos) {
                     foreach ($feed->data as $index => $photo) {
                         $frontend_time = DateTime::createFromFormat('U', $photo->created_time)->format('d F, Y \a\t H:i:s');
+                        $photo_caption = (!empty($photo->caption->text)) ? $photo->caption->text : ''; 
 
                         if (!in_array($photo->id, $used_index)) {
                             $photos[$index]['social_type']          = 'instagram';
                             $photos[$index]['id']                   = $photo->id;
-                            $photos[$index]['message']              = $photo->caption->text;
+                            $photos[$index]['message']              = $photo_caption;
                             $photos[$index]['link']                 = $photo->link;
                             $photos[$index]['backend_timestamp']    = $photo->created_time;
                             $photos[$index]['frontend_timestamp']   = $frontend_time;
